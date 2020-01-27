@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test_feild/models/epic.dart';
+import 'package:flutter_test_feild/utils/constants.dart';
 import 'package:flutter_test_feild/widgetsEpic/epicScreen.dart';
 import 'package:uuid/uuid.dart';
 
@@ -24,11 +25,11 @@ class _EpicTileState extends State<EpicTile> {
     return ListTile(
       key: Key(uuid.v1()),
       leading: Icon(Icons.list,
-      color: Colors.purple[800]),
+      color: appPurpleColor),
       title: Text(_epic.name),
       subtitle: Text(_epic.description),
       trailing: Icon(_epic.isFinished ? Icons.done : Icons.work,
-        color: _epic.isFinished ? Colors.green[800] : Colors.orange),
+        color: _epic.isFinished ? appGreenColor : appOrangeColor),
       onTap: (){
         Navigator.push(context,
         MaterialPageRoute(
