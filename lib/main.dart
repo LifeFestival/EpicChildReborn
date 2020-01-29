@@ -35,7 +35,7 @@ class MyHome extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: Icon(
           Icons.add,
-          color: appOrangeColor,
+          color: Colors.grey[100],
         ),
         onPressed: () {
           Navigator.push(context,

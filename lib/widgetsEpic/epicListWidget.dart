@@ -26,7 +26,7 @@ class _EpicListWidgetState extends State<EpicListWidget> {
       itemCount: _epicList.length,
       padding: EdgeInsets.symmetric(vertical: 3.0),
       itemBuilder: _generateEpicTiles,
-      separatorBuilder: (context, index){
+      separatorBuilder: (context, index) {
         return Divider(thickness: 3.0, color: Colors.purple[800],);
       },
     );

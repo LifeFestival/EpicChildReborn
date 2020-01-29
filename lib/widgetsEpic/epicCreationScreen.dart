@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test_feild/utils/constants.dart';
 import 'package:flutter_test_feild/utils/focusDisabledNode.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class EpicCreationScreen extends StatefulWidget {
   @override
@@ -121,6 +122,19 @@ class _EpicCreationScreenState extends State<EpicCreationScreen> {
     );
   }
 
+  SizedBox _makeCreateButton() {
+    return SizedBox(
+      width: double.infinity,
+      height: 25.0,
+      child: RaisedButton(
+        child: Text('Create'),
+        onPressed: (){
+          Fluttertoast.showToast(msg: 'Epic created');
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -137,7 +151,7 @@ class _EpicCreationScreenState extends State<EpicCreationScreen> {
           _verticalPadding,
           _makeEndDateRow(),
           _verticalPadding,
-          _makeDescriptionRow()
+          _makeDescriptionRow(),
         ],
       ),
     );
