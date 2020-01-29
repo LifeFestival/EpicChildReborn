@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test_feild/utils/constants.dart';
+import 'package:flutter_test_feild/utils/focusDisabledNode.dart';
 
 class EpicCreationScreen extends StatefulWidget {
   @override
@@ -13,6 +15,9 @@ class _EpicCreationScreenState extends State<EpicCreationScreen> {
   final DateTime _currentDateTime = DateTime.now();
   DateTime _startDate;
   DateTime _endDate;
+
+  bool _isStartInitState = true;
+  bool _isEndInitState = true;
 
   _EpicCreationScreenState() {
     _startDate = _currentDateTime;
@@ -27,26 +32,38 @@ class _EpicCreationScreenState extends State<EpicCreationScreen> {
         lastDate: DateTime(_currentDateTime.year + 2));
 
     if(_pickedDateTime != null) {
+
+      isStartDate ? _isStartInitState = false : _isEndInitState = false;
+
       setState(() {
         isStartDate ? _startDate = _pickedDateTime : _endDate = _pickedDateTime;
       });
     }
   }
 
-  static const padding = Padding(
-    padding: EdgeInsets.all(5.0),
+  static const _verticalPadding = Padding(
+    padding: EdgeInsets.all(20.0),
+  );
+
+  static const _horizontalPadding = Padding(
+    padding: EdgeInsets.all(10.0),
   );
 
   Row _makeNameRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
+        _horizontalPadding,
         Icon(Icons.account_box, color: appPurpleColor),
-        TextField(
-          onChanged: (text) {
-            _epicName = text;
-          },
-        )
+        _horizontalPadding,
+        Flexible(
+          child: TextField(
+            onChanged: (text) {
+              _epicName = text;
+            },
+          ),
+        ),
+        _horizontalPadding
       ],
     );
   }
@@ -55,11 +72,17 @@ class _EpicCreationScreenState extends State<EpicCreationScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
+        _horizontalPadding,
         Icon(Icons.calendar_today, color: appPurpleColor,),
-        TextField(
-
-          onTap: () => _showDateTimeDialog(context, true),
-        )
+        _horizontalPadding,
+        Flexible(
+          child: TextField(
+            controller: _isStartInitState ? TextEditingController() : TextEditingController(text: _startDate.toString()),
+            onTap: () => _showDateTimeDialog(context, true),
+            focusNode: DisabledFocusNode(),
+          ),
+        ),
+        _horizontalPadding
       ],
     );
   }
@@ -68,10 +91,17 @@ class _EpicCreationScreenState extends State<EpicCreationScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
+        _horizontalPadding,
         Icon(Icons.date_range, color: appPurpleColor,),
-        TextField(
-          onTap: () => _showDateTimeDialog(context, false),
-        )
+        _horizontalPadding,
+        Flexible(
+          child: TextField(
+            controller: _isEndInitState ? TextEditingController() : TextEditingController(text: _endDate.toString()),
+            onTap: () => _showDateTimeDialog(context, false),
+            focusNode: DisabledFocusNode(),
+          ),
+        ),
+        _horizontalPadding
       ],
     );
   }
@@ -80,8 +110,13 @@ class _EpicCreationScreenState extends State<EpicCreationScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
+        _horizontalPadding,
         Icon(Icons.description, color: appPurpleColor,),
-        TextField()
+        _horizontalPadding,
+        Flexible(
+          child: TextField(),
+        ),
+        _horizontalPadding
       ],
     );
   }
@@ -95,13 +130,13 @@ class _EpicCreationScreenState extends State<EpicCreationScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          padding,
+          _verticalPadding,
           _makeNameRow(),
-          padding,
+          _verticalPadding,
           _makeStartDateRow(),
-          padding,
+          _verticalPadding,
           _makeEndDateRow(),
-          padding,
+          _verticalPadding,
           _makeDescriptionRow()
         ],
       ),
