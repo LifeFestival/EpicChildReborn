@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test_feild/utils/constants.dart';
 import 'package:flutter_test_feild/utils/focusDisabledNode.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_test_feild/utils/extensions.dart';
 
 class EpicCreationScreen extends StatefulWidget {
   @override
@@ -13,6 +14,8 @@ class EpicCreationScreen extends StatefulWidget {
 class _EpicCreationScreenState extends State<EpicCreationScreen> {
 
   String _epicName = '';
+  String _epicDescription = '';
+
   final DateTime _currentDateTime = DateTime.now();
   DateTime _startDate;
   DateTime _endDate;
@@ -43,7 +46,7 @@ class _EpicCreationScreenState extends State<EpicCreationScreen> {
   }
 
   static const _verticalPadding = Padding(
-    padding: EdgeInsets.all(20.0),
+    padding: EdgeInsets.all(15.0),
   );
 
   static const _horizontalPadding = Padding(
@@ -58,10 +61,18 @@ class _EpicCreationScreenState extends State<EpicCreationScreen> {
         Icon(Icons.account_box, color: appPurpleColor),
         _horizontalPadding,
         Flexible(
-          child: TextField(
-            onChanged: (text) {
-              _epicName = text;
-            },
+          child: Container(
+            padding: EdgeInsets.only(bottom: 15),
+            child: TextField(
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.symmetric(vertical: 5),
+                labelText: 'Epic Name',
+                alignLabelWithHint: true
+              ),
+              onChanged: (text) {
+                _epicName = text;
+              },
+            ),
           ),
         ),
         _horizontalPadding
@@ -77,10 +88,18 @@ class _EpicCreationScreenState extends State<EpicCreationScreen> {
         Icon(Icons.calendar_today, color: appPurpleColor,),
         _horizontalPadding,
         Flexible(
-          child: TextField(
-            controller: _isStartInitState ? TextEditingController() : TextEditingController(text: _startDate.toString()),
-            onTap: () => _showDateTimeDialog(context, true),
-            focusNode: DisabledFocusNode(),
+          child: Container(
+            padding: EdgeInsets.only(bottom: 15),
+            child: TextField(
+              controller: _isStartInitState ? TextEditingController() : TextEditingController(text: _startDate.toString()),
+              onTap: () => _showDateTimeDialog(context, true),
+              focusNode: DisabledFocusNode(),
+              decoration: InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(vertical: 5),
+                  labelText: 'Epic Start Date',
+                  alignLabelWithHint: true
+              ),
+            ),
           ),
         ),
         _horizontalPadding
@@ -96,10 +115,18 @@ class _EpicCreationScreenState extends State<EpicCreationScreen> {
         Icon(Icons.date_range, color: appPurpleColor,),
         _horizontalPadding,
         Flexible(
-          child: TextField(
-            controller: _isEndInitState ? TextEditingController() : TextEditingController(text: _endDate.toString()),
-            onTap: () => _showDateTimeDialog(context, false),
-            focusNode: DisabledFocusNode(),
+          child: Container(
+            padding: EdgeInsets.only(bottom: 15),
+            child: TextField(
+              controller: _isEndInitState ? TextEditingController() : TextEditingController(text: _endDate.toString()),
+              onTap: () => _showDateTimeDialog(context, false),
+              focusNode: DisabledFocusNode(),
+              decoration: InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(vertical: 5),
+                  labelText: 'Epic End Date',
+                  alignLabelWithHint: true
+              ),
+            ),
           ),
         ),
         _horizontalPadding
@@ -115,7 +142,19 @@ class _EpicCreationScreenState extends State<EpicCreationScreen> {
         Icon(Icons.description, color: appPurpleColor,),
         _horizontalPadding,
         Flexible(
-          child: TextField(),
+          child: Container(
+            padding: EdgeInsets.only(bottom: 15),
+            child: TextField(
+              decoration: InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(vertical: 5),
+                  labelText: 'Epic Description',
+                  alignLabelWithHint: true
+              ),
+              onChanged: (text) {
+                _epicDescription = text;
+              },
+            ),
+          ),
         ),
         _horizontalPadding
       ],
@@ -141,18 +180,20 @@ class _EpicCreationScreenState extends State<EpicCreationScreen> {
       appBar: AppBar(
         title: Text('Epic Creation'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          _verticalPadding,
-          _makeNameRow(),
-          _verticalPadding,
-          _makeStartDateRow(),
-          _verticalPadding,
-          _makeEndDateRow(),
-          _verticalPadding,
-          _makeDescriptionRow(),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            _verticalPadding,
+            _makeNameRow(),
+            _verticalPadding,
+            _makeStartDateRow(),
+            _verticalPadding,
+            _makeEndDateRow(),
+            _verticalPadding,
+            _makeDescriptionRow(),
+          ],
+        ),
       ),
     );
   }
