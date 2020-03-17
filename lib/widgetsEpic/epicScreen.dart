@@ -66,7 +66,7 @@ class _EpicScreenState extends State<EpicScreen> with SingleTickerProviderStateM
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Epic ${_currentEpic.name.substring(0, 5)}'),
+        title: Text('Epic ${_currentEpic.name}'),
         bottom: _createTabBar(),
       ),
       body: _createTabBarView([EpicInfoScreen(_currentEpic), TaskScreen(), EventsScreen(), AttachScreen()]),

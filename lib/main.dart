@@ -20,9 +20,25 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHome extends StatelessWidget {
+class MyHome extends StatefulWidget {
 
-  final List<Epic> _epicList = generateEpicList();
+  @override
+  _MyHomeState createState() => _MyHomeState();
+}
+
+class _MyHomeState extends State<MyHome> {
+  final List<Epic> _epicList = [];
+
+  _createNewEpicOnPress(BuildContext context) async {
+    final Epic _newEpic = await Navigator.push(context,
+        MaterialPageRoute(
+            builder: (context) => EpicCreationScreen()));
+
+    if (_newEpic != null) setState(() {
+      _epicList.add(_newEpic);
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +54,7 @@ class MyHome extends StatelessWidget {
           color: Colors.grey[100],
         ),
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(
-                  builder: (context) => EpicCreationScreen()));
+          _createNewEpicOnPress(context);
         },
       ),
     );
@@ -49,13 +63,13 @@ class MyHome extends StatelessWidget {
 
 
 //Test data generation
-List<Epic> generateEpicList({int count = 5}) {
-  List<Epic> resultList = <Epic>[];
-
-  for (var i = 1; i < count; i++) {
-    resultList
-        .add(Epic('Epic number $i', description: 'Epic description number $i'));
-  }
-
-  return resultList;
-}
+//List<Epic> generateEpicList({int count = 15}) {
+//  List<Epic> resultList = <Epic>[];
+//
+//  for (var i = 1; i < count; i++) {
+//    resultList
+//        .add(Epic('Epic number $i', description: 'Epic description number $i'));
+//  }
+//
+//  return resultList;
+//}

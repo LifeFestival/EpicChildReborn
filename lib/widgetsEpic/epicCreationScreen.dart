@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_test_feild/models/epic.dart';
 import 'package:flutter_test_feild/utils/constants.dart';
 import 'package:flutter_test_feild/utils/focusDisabledNode.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -36,8 +37,8 @@ class _EpicCreationScreenState extends State<EpicCreationScreen> {
     return _epicName != '' && !_isStartInitState && !_isEndInitState;
   }
 
-  void _onCreateButtonPressed() {
-    Fluttertoast.showToast(msg: 'Epic created');
+  void _onCreateButtonPressed(BuildContext context) {
+    Navigator.pop(context, Epic(_epicName, _startDate, _endDate, description: _epicDescription));
   }
 
   Future<Null> _showDateTimeDialog(BuildContext context, bool isStartDate) async {
@@ -186,7 +187,7 @@ class _EpicCreationScreenState extends State<EpicCreationScreen> {
           color: appPurpleColor,
           child: Text('Create', style: TextStyle(color: Colors.white),),
           onPressed: _isCreateButtonActive ? (){
-            _onCreateButtonPressed();
+            _onCreateButtonPressed(context);
           } : null,
         ),
       ),

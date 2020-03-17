@@ -9,7 +9,7 @@ class Epic {
 
   String name;
   String description;
-  DateTime startData;
+  DateTime startDate;
   DateTime endDate;
 
   List<Task> taskList;
@@ -18,12 +18,9 @@ class Epic {
 
   bool isFinished;
 
-  Epic(this.name, { String description}) {
+  Epic(this.name, this.startDate, this.endDate, { String description}) {
 
     this.description = description ?? '';
-
-    startData = DateTime.now();
-    endDate = DateTime.now().add(Duration(days: 1));
 
     taskList = <Task>[];
     eventList = <Event>[];

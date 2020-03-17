@@ -22,7 +22,7 @@ class _EpicInfoScreenState extends State<EpicInfoScreen> {
           children: <Widget>[
             Text('Epic name: ${widget._epic.name}'),
             Text('Epic description: ${widget._epic.description}'),
-            Text('Start Date: ${widget._epic.startData}'),
+            Text('Start Date: ${widget._epic.startDate}'),
             Text('End Date: ${widget._epic.endDate}'),
             Text('IsFinished: ${widget._epic.isFinished}')
           ],
