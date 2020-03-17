@@ -23,9 +23,21 @@ class _EpicCreationScreenState extends State<EpicCreationScreen> {
   bool _isStartInitState = true;
   bool _isEndInitState = true;
 
+  bool _isCreateButtonActive = false;
+
   _EpicCreationScreenState() {
     _startDate = _currentDateTime;
     _endDate = _startDate.add(Duration(days: 1));
+
+    _isCreateButtonActive = _checkCreateButtonEnable();
+  }
+
+  bool _checkCreateButtonEnable() {
+    return _epicName != '' && !_isStartInitState && !_isEndInitState;
+  }
+
+  void _onCreateButtonPressed() {
+    Fluttertoast.showToast(msg: 'Epic created');
   }
 
   Future<Null> _showDateTimeDialog(BuildContext context, bool isStartDate) async {
@@ -41,6 +53,7 @@ class _EpicCreationScreenState extends State<EpicCreationScreen> {
 
       setState(() {
         isStartDate ? _startDate = _pickedDateTime : _endDate = _pickedDateTime;
+        _isCreateButtonActive = _checkCreateButtonEnable();
       });
     }
   }
@@ -71,6 +84,7 @@ class _EpicCreationScreenState extends State<EpicCreationScreen> {
               ),
               onChanged: (text) {
                 _epicName = text;
+                _isCreateButtonActive = _checkCreateButtonEnable();
               },
             ),
           ),
@@ -164,16 +178,16 @@ class _EpicCreationScreenState extends State<EpicCreationScreen> {
   SizedBox _makeCreateButton() {
     return SizedBox(
       width: double.infinity,
-      height: 35.0,
+      height: 45.0,
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 20),
         child: RaisedButton(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           color: appPurpleColor,
           child: Text('Create', style: TextStyle(color: Colors.white),),
-          onPressed: (){
-            Fluttertoast.showToast(msg: 'Epic created');
-          },
+          onPressed: _isCreateButtonActive ? (){
+            _onCreateButtonPressed();
+          } : null,
         ),
       ),
     );
@@ -188,7 +202,7 @@ class _EpicCreationScreenState extends State<EpicCreationScreen> {
       body: Container(
         child: SingleChildScrollView(
           child: SizedBox(
-            height: MediaQuery.of(context).size.height - 95,
+            height: MediaQuery.of(context).size.height - 125,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -202,7 +216,7 @@ class _EpicCreationScreenState extends State<EpicCreationScreen> {
                 _makeEndDateRow(),
                 _verticalPadding,
                 _makeDescriptionRow(),
-                Expanded(child: Container(height: 10,),),
+                Expanded(child: Container(height: 10,)),
                 _makeCreateButton()
               ],
             ),
