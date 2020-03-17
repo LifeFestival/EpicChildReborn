@@ -91,7 +91,7 @@ class _EpicCreationScreenState extends State<EpicCreationScreen> {
           child: Container(
             padding: EdgeInsets.only(bottom: 15),
             child: TextField(
-              controller: _isStartInitState ? TextEditingController() : TextEditingController(text: _startDate.toString()),
+              controller: _isStartInitState ? TextEditingController() : TextEditingController(text: _startDate.toReadableString()),
               onTap: () => _showDateTimeDialog(context, true),
               focusNode: DisabledFocusNode(),
               decoration: InputDecoration(
@@ -118,7 +118,7 @@ class _EpicCreationScreenState extends State<EpicCreationScreen> {
           child: Container(
             padding: EdgeInsets.only(bottom: 15),
             child: TextField(
-              controller: _isEndInitState ? TextEditingController() : TextEditingController(text: _endDate.toString()),
+              controller: _isEndInitState ? TextEditingController() : TextEditingController(text: _endDate.toReadableString()),
               onTap: () => _showDateTimeDialog(context, false),
               focusNode: DisabledFocusNode(),
               decoration: InputDecoration(
@@ -164,12 +164,17 @@ class _EpicCreationScreenState extends State<EpicCreationScreen> {
   SizedBox _makeCreateButton() {
     return SizedBox(
       width: double.infinity,
-      height: 25.0,
-      child: RaisedButton(
-        child: Text('Create'),
-        onPressed: (){
-          Fluttertoast.showToast(msg: 'Epic created');
-        },
+      height: 35.0,
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 20),
+        child: RaisedButton(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          color: appPurpleColor,
+          child: Text('Create', style: TextStyle(color: Colors.white),),
+          onPressed: (){
+            Fluttertoast.showToast(msg: 'Epic created');
+          },
+        ),
       ),
     );
   }
@@ -180,19 +185,28 @@ class _EpicCreationScreenState extends State<EpicCreationScreen> {
       appBar: AppBar(
         title: Text('Epic Creation'),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            _verticalPadding,
-            _makeNameRow(),
-            _verticalPadding,
-            _makeStartDateRow(),
-            _verticalPadding,
-            _makeEndDateRow(),
-            _verticalPadding,
-            _makeDescriptionRow(),
-          ],
+      body: Container(
+        child: SingleChildScrollView(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height - 95,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                _verticalPadding,
+                _makeNameRow(),
+                _verticalPadding,
+                _makeStartDateRow(),
+                _verticalPadding,
+                _makeEndDateRow(),
+                _verticalPadding,
+                _makeDescriptionRow(),
+                Expanded(child: Container(height: 10,),),
+                _makeCreateButton()
+              ],
+            ),
+          ),
         ),
       ),
     );
